@@ -70,7 +70,7 @@ public:
   /** Get raw host name (as it is reported from the host)
    * @param str WDL_String into which to write the host name */
   void GetRawHostStr(WDL_String& str) const { str.Set(mRawHostNameStr.Get()); }
-  
+
   /** Get the host version number as an integer
    * @param decimal \c true indicates decimal format = VVVVRRMM, otherwise hexadecimal 0xVVVVRRMM.
    * @return The host version number as an integer. */
