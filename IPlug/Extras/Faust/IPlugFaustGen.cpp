@@ -149,7 +149,8 @@ llvm_dsp_factory *FaustGen::Factory::CreateFactoryFromSourceCode()
 
   // Polyphony handling
   bool midiSync = false;
-  MidiMeta::analyse(pMonoDSP, midiSync, nVoices);
+  bool midi = true;
+  MidiMeta::analyse(pMonoDSP, midi, midiSync, nVoices);
 
   if (nVoices > 0)
   {
