@@ -16,7 +16,13 @@ then
 else
   git clone --recursive https://github.com/grame-cncm/faust.git $FAUST_REPO_DIR
 fi
-mkdir $FAUST_CMAKE_BUILD_DIR
+#skip if folder already exists
+if [ -d "$FAUST_CMAKE_BUILD_DIR" ]
+then
+  echo faust cmake build exists
+else
+  mkdir $FAUST_CMAKE_BUILD_DIR
+fi
 cd $FAUST_CMAKE_BUILD_DIR
 cmake -C $DEPS_DIR/iplug-backends.cmake -C $DEPS_DIR/iplug-targets-mac.cmake -DINCLUDE_STATIC=on -DINCLUDE_DYNAMIC=on -DINCLUDE_OSC=off -DINCLUDE_HTTP=off -DUNIVERSAL=off ../faust/build
 cmake -D CMAKE_INSTALL_PREFIX=$INSTALL_DIR ../faust/build
