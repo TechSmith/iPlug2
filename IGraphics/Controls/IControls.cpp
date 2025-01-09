@@ -1039,6 +1039,7 @@ void IVRangeSliderControl::OnMouseOver(float x, float y, const IMouseMod& mod)
 void IVRangeSliderControl::OnMouseDown(float x, float y, const IMouseMod& mod)
 {
   mMouseIsDown = true;
+  OnMouseOver(x, y, mod);
   OnMouseDrag(x, y, 0., 0., mod);
 }
 
