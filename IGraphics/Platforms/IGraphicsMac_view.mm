@@ -570,6 +570,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
     [pWindow setAcceptsMouseMovedEvents: YES];
     
     CGFloat newScale = [pWindow backingScaleFactor];
+    fprintf(stderr, "[HiDPI DEBUG] viewDidMoveToWindow: detected backingScaleFactor = %f\n", (float)newScale);
 
     if (mGraphics)
       mGraphics->SetScreenScale(newScale);
@@ -609,6 +610,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
     return;
   
   CGFloat newScale = [pWindow backingScaleFactor];
+  fprintf(stderr, "[HiDPI DEBUG] viewDidChangeBackingProperties: newScale = %f\n", (float)newScale);
   
   mGraphics->SetPlatformContext(nullptr);
   

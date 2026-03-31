@@ -58,6 +58,10 @@ public:
     
     if (pSize)
     {
+      // DEBUG: Log what host is telling us
+      fprintf(stderr, "[VST3 DEBUG] onSize() called: %d x %d\n", 
+              pSize->getWidth(), pSize->getHeight());
+      
       rect = *pSize;
       mOwner.OnParentWindowResize(rect.getWidth(), rect.getHeight());
     }
@@ -71,7 +75,13 @@ public:
     
     if (mOwner.HasUI())
     {
-      *pSize = Steinberg::ViewRect(0, 0, mOwner.GetEditorWidth(), mOwner.GetEditorHeight());
+      int width = mOwner.GetEditorWidth();
+      int height = mOwner.GetEditorHeight();
+      
+      // DEBUG: Log what we're returning
+      fprintf(stderr, "[VST3 DEBUG] getSize() returning: %d x %d\n", width, height);
+      
+      *pSize = Steinberg::ViewRect(0, 0, width, height);
       
       return Steinberg::kResultTrue;
     }
@@ -107,6 +117,8 @@ public:
   
   Steinberg::tresult PLUGIN_API attached(void* pParent, Steinberg::FIDString type) override
   {
+    fprintf(stderr, "[VST3 DEBUG] attached() called, type: %s\n", type);
+    
     if (mOwner.HasUI())
     {
       void* pView = nullptr;
@@ -135,7 +147,14 @@ public:
 
   Steinberg::tresult PLUGIN_API setContentScaleFactor(ScaleFactor factor) override
   {
+    // DEBUG: Log if this is being called
+    fprintf(stderr, "[VST3 DEBUG] setContentScaleFactor() called with factor: %f\n", factor);
+    
+#ifdef OS_WIN
     mOwner.SetScreenScale(factor);
+#else
+    fprintf(stderr, "[VST3 DEBUG] setContentScaleFactor() IGNORED on macOS (upstream behavior)\n");
+#endif
 
     return Steinberg::kResultOk;
   }

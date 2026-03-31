@@ -97,8 +97,11 @@ void* IGraphicsMac::OpenWindow(void* pParent)
   [[pView openGLContext] makeCurrentContext];
 #endif
     
+  // Note: SetScreenScale is NOT called here. At this point the view has no window yet
+  // (it's added to the parent at line 108 below). The correct scale will be set in
+  // viewDidMoveToWindow when the view is attached to the actual window, where it can
+  // read [pWindow backingScaleFactor] from the real window.
   OnViewInitialized([pView layer]);
-  SetScreenScale([[NSScreen mainScreen] backingScaleFactor]);
   GetDelegate()->LayoutUI(this);
   UpdateTooltips();
   GetDelegate()->OnUIOpen();
